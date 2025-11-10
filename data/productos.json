@@ -16,7 +16,7 @@
     {
         "nombre": "Jabon Dove",
         "codigo": "SH001",
-        "cantidad": 10,
+        "cantidad": 0,
         "precio": 100.0,
         "tipo": "aseo personal"
     }

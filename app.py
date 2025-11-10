@@ -6,9 +6,9 @@ app.secret_key = "distribuidora_gabys_2025"
 
 BASE_DIR = os.path.join(os.path.dirname(__file__), "data")
 
-# ------------------------------
+# -------------------------------------------------------------
 # Funciones auxiliares
-# ------------------------------
+# -------------------------------------------------------------
 
 def cargar_json(nombre_archivo):
     ruta = os.path.join(BASE_DIR, nombre_archivo)
@@ -25,9 +25,29 @@ def guardar_json(nombre_archivo, data):
     with open(ruta, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=4, ensure_ascii=False)
 
-# ------------------------------
+# -------------------------------------------------------------
+# Sincronización automática de alertas
+# -------------------------------------------------------------
+
+def sincronizar_alertas():
+    productos = cargar_json("productos.json")
+    alertas = []
+
+    for p in productos:
+        if p["cantidad"] <= 5:  # puedes cambiar el mínimo cuando quieras
+            alertas.append({
+                "codigo": p["codigo"],
+                "nombre": p["nombre"],
+                "cantidad": p["cantidad"],
+                "tipo": p["tipo"],
+                "mensaje": f"El producto '{p['nombre']}' está por debajo del stock mínimo"
+            })
+
+    guardar_json("alertas.json", alertas)
+
+# -------------------------------------------------------------
 # Rutas principales
-# ------------------------------
+# -------------------------------------------------------------
 
 @app.route("/")
 def index():
@@ -56,26 +76,26 @@ def logout():
     flash("Has cerrado sesión correctamente", "info")
     return redirect(url_for("login"))
 
-# ------------------------------
+# -------------------------------------------------------------
 # Gestión de productos
-# ------------------------------
+# -------------------------------------------------------------
 
 @app.route("/productos")
 def productos():
     if "usuario" not in session:
         return redirect(url_for("login"))
+
     productos = cargar_json("productos.json")
 
-    # Filtro de búsqueda
+    # Filtro por búsqueda
     query = request.args.get("q", "").strip().lower()
     if query:
         productos = [
-            p for p in productos
+            p for p in productos 
             if query in p["nombre"].lower() or query in p["codigo"].lower()
         ]
 
     return render_template("productos.html", productos=productos)
-
 
 @app.route("/productos/nuevo", methods=["GET", "POST"])
 def nuevo_producto():
@@ -95,13 +115,16 @@ def nuevo_producto():
             "tipo": request.form["tipo"]
         }
 
-        # Evita códigos duplicados
+        # Evitar códigos duplicados
         if any(p["codigo"] == nuevo["codigo"] for p in productos):
             flash("Ya existe un producto con ese código.", "danger")
             return redirect(url_for("nuevo_producto"))
 
         productos.append(nuevo)
         guardar_json("productos.json", productos)
+
+        sincronizar_alertas()
+
         flash("Producto agregado correctamente.", "success")
         return redirect(url_for("productos"))
 
@@ -124,7 +147,7 @@ def editar_producto(codigo):
     if request.method == "POST":
         nuevo_codigo = request.form["codigo"]
 
-        # Evita duplicados si se cambia el código
+        # Evita duplicados si cambian el código
         if nuevo_codigo != codigo and any(p["codigo"] == nuevo_codigo for p in productos):
             flash("Ya existe otro producto con ese código.", "danger")
             return redirect(url_for("editar_producto", codigo=codigo))
@@ -136,6 +159,9 @@ def editar_producto(codigo):
         producto["tipo"] = request.form["tipo"]
 
         guardar_json("productos.json", productos)
+
+        sincronizar_alertas()
+
         flash("Producto actualizado correctamente.", "success")
         return redirect(url_for("productos"))
 
@@ -154,13 +180,16 @@ def eliminar_producto(codigo):
     else:
         productos = [p for p in productos if p["codigo"] != codigo]
         guardar_json("productos.json", productos)
+
+        sincronizar_alertas()
+
         flash(f"Producto '{producto['nombre']}' eliminado correctamente.", "success")
 
     return redirect(url_for("productos"))
 
-# ------------------------------
-# Otras secciones (alertas, reportes)
-# ------------------------------
+# -------------------------------------------------------------
+# Otras secciones
+# -------------------------------------------------------------
 
 @app.route("/alertas")
 def alertas():
@@ -176,9 +205,9 @@ def reportes():
     reportes = cargar_json("reportes.json")
     return render_template("reportes.html", reportes=reportes)
 
-# ------------------------------
-# Ejecutar aplicación
-# ------------------------------
+# -------------------------------------------------------------
+# Ejecutar app
+# -------------------------------------------------------------
 
 if __name__ == "__main__":
     app.run(debug=True)

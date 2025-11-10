@@ -1,13 +1,9 @@
 [
-  {"codigo": "AC002", "nombre": "Acondicionador Pantene", "cantidad": 18, "nivel": "advertencia", "mensaje": "Nivel de stock bajo"},
-  {"codigo": "CR004", "nombre": "Crema Nivea Soft", "cantidad": 12, "nivel": "crítico", "mensaje": "Stock crítico, quedan pocas unidades"},
-  {"codigo": "EB008", "nombre": "Enjuague Bucal Listerine", "cantidad": 15, "nivel": "advertencia", "mensaje": "Producto con bajo inventario"},
-  {"codigo": "DF015", "nombre": "Desinfectante Lysol", "cantidad": 10, "nivel": "crítico", "mensaje": "Stock casi agotado"},
-  {"codigo": "CE022", "nombre": "Cera para pisos Johnson", "cantidad": 15, "nivel": "advertencia", "mensaje": "Stock bajo"},
-  {"codigo": "TL024", "nombre": "Talco Johnson Baby", "cantidad": 14, "nivel": "advertencia", "mensaje": "Producto con inventario limitado"},
-  {"codigo": "PS027", "nombre": "Protector Solar Nivea", "cantidad": 8, "nivel": "crítico", "mensaje": "Nivel de stock muy bajo"},
-  {"codigo": "AC028", "nombre": "Aceite Corporal Johnson", "cantidad": 10, "nivel": "crítico", "mensaje": "Producto casi agotado"},
-  {"codigo": "EC041", "nombre": "Enjuague Capilar Sedal", "cantidad": 13, "nivel": "advertencia", "mensaje": "Nivel de stock bajo"},
-  {"codigo": "CH042", "nombre": "Crema para manos Neutrogena", "cantidad": 9, "nivel": "crítico", "mensaje": "Muy pocas unidades disponibles"},
-  {"codigo": "JL043", "nombre": "Jabón Líquido Eucerin", "cantidad": 7, "nivel": "crítico", "mensaje": "Producto agotándose"}
+    {
+        "codigo": "SH001",
+        "nombre": "Jabon Dove",
+        "cantidad": 0,
+        "tipo": "aseo personal",
+        "mensaje": "El producto 'Jabon Dove' está por debajo del stock mínimo"
+    }
 ]
