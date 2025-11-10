@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block contenido %}
+<div class="card">
+  <div class="card-header">Reporte General</div>
+  <div class="card-body">
+    <ul class="list-group">
+      <li class="list-group-item"><strong>Total de productos:</strong> {{ reportes.total_productos }}</li>
+      <li class="list-group-item"><strong>Promedio de precio:</strong> ${{ "{:,.0f}".format(reportes.promedio_precio) }}</li>
+      <li class="list-group-item"><strong>Promedio de cantidad:</strong> {{ reportes.promedio_cantidad }}</li>
+      <li class="list-group-item"><strong>Producto más costoso:</strong> {{ reportes.producto_mas_costoso.nombre }} (${{ "{:,.0f}".format(reportes.producto_mas_costoso.precio) }})</li>
+      <li class="list-group-item"><strong>Producto con menos stock:</strong> {{ reportes.producto_con_menos_stock.nombre }} ({{ reportes.producto_con_menos_stock.cantidad }} unidades)</li>
+      <li class="list-group-item"><strong>Valor total inventario:</strong> ${{ "{:,.0f}".format(reportes.valor_total_inventario) }}</li>
+    </ul>
+  </div>
+</div>
+{% endblock %}

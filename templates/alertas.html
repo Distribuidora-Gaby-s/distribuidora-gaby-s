@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block contenido %}
+<div class="card">
+  <div class="card-header bg-danger text-white">Alertas de Inventario</div>
+  <div class="card-body">
+    <table class="table table-bordered align-middle">
+      <thead class="table-danger">
+        <tr>
+          <th>Código</th>
+          <th>Producto</th>
+          <th>Cantidad</th>
+          <th>Nivel</th>
+          <th>Mensaje</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for a in alertas %}
+        <tr class="{% if a.nivel == 'crítico' %}table-danger{% else %}table-warning{% endif %}">
+          <td>{{ a.codigo }}</td>
+          <td>{{ a.nombre }}</td>
+          <td>{{ a.cantidad }}</td>
+          <td>{{ a.nivel|capitalize }}</td>
+          <td>{{ a.mensaje }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

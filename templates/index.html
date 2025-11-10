@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block contenido %}
+<div class="text-center">
+  <h2 class="mb-4">Bienvenida {{ usuario|capitalize }} 👋</h2>
+  <p class="lead mb-5">Sistema de gestión de la <strong>Distribuidora Gaby's</strong></p>
+
+  <div class="row justify-content-center">
+    <div class="col-md-3 mb-3">
+      <a href="/productos" class="btn btn-primary w-100 p-3">
+        🧴 Productos
+      </a>
+    </div>
+    <div class="col-md-3 mb-3">
+      <a href="/alertas" class="btn btn-warning w-100 p-3">
+        ⚠️ Alertas
+      </a>
+    </div>
+    <div class="col-md-3 mb-3">
+      <a href="/reportes" class="btn btn-success w-100 p-3">
+        📊 Reportes
+      </a>
+    </div>
+  </div>
+
+  <a href="/logout" class="btn btn-outline-danger mt-4">Cerrar sesión</a>
+</div>
+{% endblock %}
+
