@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Nuevo Producto{% endblock %}
+{% block contenido %}
+<div class="card">
+  <div class="card-header">Registrar nuevo producto</div>
+  <div class="card-body">
+    <form method="post" action="{{ url_for('nuevo_producto') }}">
+      <div class="mb-3">
+        <label class="form-label">Nombre</label>
+        <input class="form-control" type="text" name="nombre" required>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Código</label>
+        <input class="form-control" type="text" name="codigo" required>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Cantidad</label>
+        <input class="form-control" type="number" name="cantidad" min="0" value="0" required>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Precio</label>
+        <input class="form-control" type="number" name="precio" step="0.01" min="0" value="0" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Guardar</button>
+      <a href="{{ url_for('productos') }}" class="btn btn-secondary">Cancelar</a>
+    </form>
+  </div>
+</div>
+{% endblock %}
