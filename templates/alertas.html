@@ -1,28 +1,40 @@
 {% extends "base.html" %}
+{% block title %}Alertas{% endblock %}
 {% block contenido %}
-<div class="card">
-  <div class="card-header bg-danger text-white">Alertas de Inventario</div>
-  <div class="card-body">
-    <table class="table table-bordered align-middle">
-      <thead class="table-danger">
-        <tr>
-          <th>Código</th>
-          <th>Producto</th>
-          <th>Cantidad</th>
-          <th>Mensaje</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for a in alertas %}
-        <tr class="{% if a.nivel == 'crítico' %}table-danger{% else %}table-warning{% endif %}">
-          <td>{{ a.codigo }}</td>
-          <td>{{ a.nombre }}</td>
-          <td>{{ a.cantidad }}</td>
-          <td>{{ a.mensaje }}</td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  </div>
+<div class="container">
+    <h2 class="titulo">⚠️ Alertas de Stock</h2>
+
+    <div class="acciones-superiores">
+        <a href="{{ url_for('index') }}" class="btn-volver">🏠 Volver al Menú Principal</a>
+    </div>
+
+    {% if alertas %}
+    <div class="tabla-container">
+        <table class="tabla">
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Código</th>
+                    <th>Cantidad Actual</th>
+                    <th>Stock Mínimo</th>
+                    <th>Mensaje</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for a in alertas %}
+                <tr>
+                    <td>{{ a.nombre }}</td>
+                    <td>{{ a.codigo }}</td>
+                    <td>{{ a.cantidad }}</td>
+                    <td>{{ a.minimo }}</td>
+                    <td style="color: #b71c1c; font-weight: 600;">{{ a.mensaje }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+        <p class="texto-vacio">No hay alertas activas 🎉</p>
+    {% endif %}
 </div>
 {% endblock %}

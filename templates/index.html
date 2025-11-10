@@ -1,28 +1,25 @@
 {% extends "base.html" %}
+{% block title %}Inicio{% endblock %}
 {% block contenido %}
-<div class="text-center">
-  <h2 class="mb-4">Bienvenida {{ usuario|capitalize }} 👋</h2>
-  <p class="lead mb-5">Sistema de gestión de la <strong>Distribuidora Gaby's</strong></p>
+<div class="container">
+    <h2 class="titulo">Menú principal</h2>
 
-  <div class="row justify-content-center">
-    <div class="col-md-3 mb-3">
-      <a href="/productos" class="btn btn-primary w-100 p-3">
-        🧴 Productos
-      </a>
+    <div class="card-menu">
+        <a href="{{ url_for('flujo_productos') }}" class="btn-menu">
+            🌀 <span>Flujo de Productos</span>
+        </a>
+        <a href="{{ url_for('productos') }}" class="btn-menu">
+            📦 <span>Productos</span>
+        </a>
+        <a href="{{ url_for('alertas') }}" class="btn-menu">
+            ⚠️ <span>Alertas</span>
+        </a>
+        <a href="{{ url_for('reportes') }}" class="btn-menu">
+            📊 <span>Reportes</span>
+        </a>
+        <a href="{{ url_for('devoluciones') }}" class="btn-menu">
+            ↩️ <span>Devoluciones</span>
+        </a>
     </div>
-    <div class="col-md-3 mb-3">
-      <a href="/alertas" class="btn btn-warning w-100 p-3">
-        ⚠️ Alertas
-      </a>
-    </div>
-    <div class="col-md-3 mb-3">
-      <a href="/reportes" class="btn btn-success w-100 p-3">
-        📊 Reportes
-      </a>
-    </div>
-  </div>
-
-  <a href="/logout" class="btn btn-outline-danger mt-4">Cerrar sesión</a>
 </div>
 {% endblock %}
-
