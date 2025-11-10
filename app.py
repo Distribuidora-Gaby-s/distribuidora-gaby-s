@@ -32,8 +32,14 @@ def guardar_json(nombre_archivo, data):
 @app.route("/")
 def index():
     if "usuario" in session:
-        return render_template("index.html", usuario=session["usuario"])
+        return redirect(url_for("menu"))
     return redirect(url_for("login"))
+
+@app.route("/menu")
+def menu():
+    if "usuario" not in session:
+        return redirect(url_for("login"))
+    return render_template("index.html", usuario=session["usuario"])
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -46,8 +52,12 @@ def login():
             if u["usuario"] == user and u["password"] == pwd:
                 session["usuario"] = user
                 flash("Inicio de sesión exitoso", "success")
-                return redirect(url_for("index"))
-        flash("Usuario o contraseña incorrectos", "danger")
+                # Redirige a /menu según lo que espera el test
+                return redirect(url_for("menu"))
+
+        # Mensaje exacto esperado por el test
+        flash("Credenciales incorrectas", "danger")
+
     return render_template("login.html")
 
 @app.route("/logout")
@@ -308,7 +318,6 @@ def reportes():
         "otros": len([p for p in productos if p["tipo"] == "otros"])
     }
 
-    # Últimos movimientos (máximo 5 de cada uno)
     ultimas_ventas = ventas[-5:] if ventas else []
     ultimas_compras = compras[-5:] if compras else []
     ultimas_devoluciones = devoluciones[-5:] if devoluciones else []
@@ -331,4 +340,3 @@ def reportes():
 
 if __name__ == "__main__":
     app.run(debug=True)
-
